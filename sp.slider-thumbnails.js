@@ -95,6 +95,8 @@
      * 1. Store the loop index for this thumbnail as a data attribute as we'll
      *    be waiting for the image the image to load to execute further code and
      *    thus won't be able to rely on the loop index.
+     * 2. Unbind the load event, as it might get fired again on resize when
+     *    a higher resolution image is loaded.
      */
     function createSlideThumbnails( $typeOfSlider ) {
         var thumbnailsList = '<ul class="'+params.thumbnailsListClass+'"></ul>';
@@ -119,6 +121,7 @@
                         createAndCollectThumbnail(thumbnails, $slider,
                             originalImgSrc, index);
                         outputAllThumbnails(thumbnails, slidesCount, $slider);
+                        $(this).unbind('load'); /* [2] */
                     });
                 }
                 else {
